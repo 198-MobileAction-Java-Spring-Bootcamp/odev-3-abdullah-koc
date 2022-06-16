@@ -1,16 +1,12 @@
 package com.example.hwthree.vhc.controller;
 
 import com.example.hwthree.vhc.dto.VhcVehicleAddDto;
-import com.example.hwthree.vhc.dto.VhcVehicleDto;
-import com.example.hwthree.vhc.dto.VhcVehicleGetDto;
 import com.example.hwthree.vhc.dto.VhcVehicleUpdateDto;
 import com.example.hwthree.vhc.service.VhcVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/vehicles")
@@ -50,8 +46,8 @@ public class VhcVehicleController {
             tags = "Vehicle Controller",
             description = "Gets vehicles by brand and model"
     )
-    @GetMapping
-    public ResponseEntity getVehiclesByBrandAndModel(@RequestBody VhcVehicleGetDto vhcVehicleGetDto){
-        return ResponseEntity.ok(vhcVehicleService.getVehiclesByBrandAndModel(vhcVehicleGetDto));
+    @GetMapping("/{brand}/{model}")
+    public ResponseEntity getVehiclesByBrandAndModel(@PathVariable String brand, @PathVariable String model){
+        return ResponseEntity.ok(vhcVehicleService.getVehiclesByBrandAndModel(brand, model));
     }
 }

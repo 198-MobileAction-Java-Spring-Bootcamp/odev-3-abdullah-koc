@@ -1,8 +1,5 @@
 package com.example.hwthree.vhc.service;
 
-
-import com.example.hwthree.usr.entity.UsrUser;
-import com.example.hwthree.usr.service.UsrUserService;
 import com.example.hwthree.vhc.converter.VhcVehicleMapper;
 import com.example.hwthree.vhc.dto.*;
 import com.example.hwthree.vhc.entity.VhcVehicle;
@@ -87,9 +84,7 @@ public class VhcVehicleService {
         return vhcVehicleMapper.convertToVhcVehicleDto(vhcVehicle);
     }
 
-    public List<VhcVehicleDto> getVehiclesByBrandAndModel(VhcVehicleGetDto vhcVehicleGetDto){
-        String brand = vhcVehicleGetDto.getBrand();
-        String model = vhcVehicleGetDto.getModel();
+    public List<VhcVehicleDto> getVehiclesByBrandAndModel(String brand, String model){
 
         List<VhcVehicle> vhcVehicles = vhcVehicleEntityService.findByBrandAndModel(brand, model);
         List<VhcVehicleDto> vhcVehicleDtoList = new ArrayList<>();
