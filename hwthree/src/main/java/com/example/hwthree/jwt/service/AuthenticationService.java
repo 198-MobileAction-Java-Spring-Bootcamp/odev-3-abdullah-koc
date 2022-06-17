@@ -22,10 +22,21 @@ public class AuthenticationService {
     private final UsrUserService usrUserService;
     private final JwtTokenGenerator jwtTokenGenerator;
 
+
+    /*
+     * This method registers the user
+     * @param UsrUserRegisterDto
+     * @return UsrUserDto
+     */
     public UsrUserDto register(UsrUserRegisterDto usrUserRegisterDto) {
         return usrUserService.registerUser(usrUserRegisterDto);
     }
 
+    /*
+     * This method logs in the user
+     * @param JwtLoginRequestDto
+     * @return token
+     */
     public String login(JwtLoginRequestDto jwtLoginRequestDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -33,15 +44,9 @@ public class AuthenticationService {
         );
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-
         String token = jwtTokenGenerator.generateJwtToken(authentication);
-
         String fullToken = JwtConstant.BEARER.getConstant() + token;
-
         return fullToken;
     }
 

@@ -29,9 +29,14 @@ public class UsrUserService {
     private final VhcVehicleEntityService vhcVehicleEntityService;
     private final VhcVehicleMapper vhcVehicleMapper;
 
+    /*
+     *This method is used to register a new user
+     * @param usrUserRegisterDto
+     * @return UsrUserDto
+     */
     public UsrUserDto registerUser(UsrUserRegisterDto userRegisterDto) {
 
-        if(usrUserEntityService.findByUsername(userRegisterDto.getUsername()) != null){
+        if (usrUserEntityService.findByUsername(userRegisterDto.getUsername()) != null) {
             throw new RuntimeException("A user with the same username already exists.");
         }
 
@@ -44,11 +49,12 @@ public class UsrUserService {
         return UsrUserMapper.INSTANCE.convertToUsrUserDto(usrUser);
     }
 
-    public UsrUser findByUsername(String username){
-        return usrUserEntityService.findByUsername(username);
-    }
 
-    public List<VhcVehicleDto> getVehicles(){
+    /*
+     *This method gets the vehicles of the user
+     * @return List<VhcVehicleDto>
+     */
+    public List<VhcVehicleDto> getVehicles() {
 
         UsrUser usrUser = getUser();
         List<VhcVehicleDto> vhcVehicleDtoList = new ArrayList<>();
@@ -60,19 +66,23 @@ public class UsrUserService {
         return vhcVehicleDtoList;
     }
 
-
-    public void changePassword(UsrUserChangePasswordDto usrUserChangePasswordDto){
+    /*
+     *This method is used to change the password of the user
+     * @param usrUserChangePasswordDto
+     * @return UsrUserDto
+     */
+    public void changePassword(UsrUserChangePasswordDto usrUserChangePasswordDto) {
 
         UsrUser usrUser = getUser();
-        if(usrUser == null){
+        if (usrUser == null) {
             throw new RuntimeException("User not found.");
         }
 
-        if(!passwordEncoder.matches(usrUserChangePasswordDto.getOldPassword(), usrUser.getPassword())){
+        if (!passwordEncoder.matches(usrUserChangePasswordDto.getOldPassword(), usrUser.getPassword())) {
             throw new RuntimeException("Old password is incorrect.");
         }
 
-        if(!usrUserChangePasswordDto.getNewPassword().equals(usrUserChangePasswordDto.getConfirmPassword())){
+        if (!usrUserChangePasswordDto.getNewPassword().equals(usrUserChangePasswordDto.getConfirmPassword())) {
             throw new RuntimeException("New password and confirm password do not match.");
         }
 
@@ -80,11 +90,14 @@ public class UsrUserService {
         usrUserEntityService.save(usrUser);
     }
 
-    public void deleteUser(){
+    /*
+     *This method is used to delete the user
+     */
+    public void deleteUser() {
 
         UsrUser usrUser = getUser();
 
-        if(usrUser == null){
+        if (usrUser == null) {
             throw new RuntimeException("User not found.");
         }
 
@@ -98,7 +111,11 @@ public class UsrUserService {
 
     }
 
-    private UsrUser getUser(){
+    /*
+     *This method is used to get the logged user
+     * @return UsrUser
+     */
+    private UsrUser getUser() {
         UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UsrUser usrUser = usrUserEntityService.findByUsername(details.getUsername());
         return usrUser;
