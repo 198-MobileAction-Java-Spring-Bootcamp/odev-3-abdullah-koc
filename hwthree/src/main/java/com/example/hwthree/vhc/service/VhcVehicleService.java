@@ -85,7 +85,7 @@ public class VhcVehicleService {
 
         VhcVehicle vhcVehicle1 = vhcVehicleEntityService.findByPlate(vhcVehicleUpdateDto.getPlate());
 
-        if (!Objects.equals(vhcVehicle.getId(), vhcVehicle1.getId())) {
+        if(vhcVehicle1 != null && !vhcVehicle1.getId().equals(vhcVehicle.getId())) {
             throw new RuntimeException("This vehicle already exists.");
         }
 
