@@ -3,11 +3,11 @@ package com.example.hwthree.vhc.entity;
 
 import com.example.hwthree.gen.entity.BaseEntity;
 import com.example.hwthree.usr.entity.UsrUser;
+import com.example.hwthree.vhc.enums.EnumVehicleColor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "VHC_VEHICLE")
@@ -32,8 +32,9 @@ public class VhcVehicle extends BaseEntity {
     @Column(name = "PLATE", length = 30, nullable = false)
     private String plate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "COLOR", length = 30, nullable = false)
-    private String color;
+    private EnumVehicleColor color;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USR_USER")
